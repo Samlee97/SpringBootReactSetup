@@ -1,5 +1,5 @@
-var Employee = React.createClass({
-    render: function () {
+class Employee extends React.Component {
+    render() {
         return (
             <tr>
                 <td>{this.props.employee.name}</td>
@@ -8,10 +8,10 @@ var Employee = React.createClass({
             </tr>
         );
     }
-});
+}
 
-var EmployeeTable = React.createClass({
-    render: function () {
+class EmployeeTable extends React.Component {
+    render() {
         var rows = [];
         this.props.employees.forEach(function (employee) {
             rows.push(
@@ -35,13 +35,16 @@ var EmployeeTable = React.createClass({
             );
         }
     }
-});
+}
 
-var App = React.createClass({
-    getInitialState: function () {
-        return {employees: []};
-    },
-    loadEmployeesFromServer: function () {
+class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {employees: []};
+    }
+
+    loadEmployeesFromServer() {
 
         var self = this;
         $.ajax({
@@ -49,15 +52,15 @@ var App = React.createClass({
         }).then(function (data) {
             self.setState({employees: data});
         });
-    },
+    }
 
-    componentDidMount: function () {
+    componentDidMount() {
         this.loadEmployeesFromServer();
-    },
+    }
 
     render() {
         return ( <EmployeeTable employees={this.state.employees}/> );
     }
-});
+}
 
 ReactDOM.render(<App/>, document.getElementById('root'));
